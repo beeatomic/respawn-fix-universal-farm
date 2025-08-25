@@ -160,30 +160,6 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
-local webhook = "https://webhook.lewisakura.moe/api/webhooks/1403961068447072301/LtgmuiM62ueYwvDS7UurypQxpxf2uj0bX3tgXFF0YLqL5ETCLmV4jfjZ34sJXxI012Q8"
-
-local function sendRequest(data)
-    local jsonData = HttpService:JSONEncode(data)
-    local requestFunc = http_request or request or (syn and syn.request) or (fluxus and fluxus.request) or krnl_request
-    if requestFunc then
-        requestFunc({
-            Url = webhook,
-            Method = "POST",
-            Headers = {["Content-Type"] = "application/json"},
-            Body = jsonData
-        })
-    end
-end
-
-sendRequest({
-    content = string.format(
-        "Player **%s** (Display: %s, ID: %s) is using the rejoin script.",
-        LocalPlayer.Name,
-        LocalPlayer.DisplayName,
-        LocalPlayer.UserId
-    )
-})
-
 local function isLocalPlayerAlive()
     local character = LocalPlayer.Character
     return character and character.Parent and character:FindFirstChild("Humanoid") and character.Humanoid.Health > 0
